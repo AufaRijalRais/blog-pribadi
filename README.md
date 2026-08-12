@@ -516,6 +516,6 @@ Bukti diambil **langsung dari layar** (browser dibuka lalu di-screenshot, dan co
 - `bukti-05-post.png` — halaman detail post `/posts/1`
 - `bukti-06-login.png` — halaman login
 - `bukti-07-register.png` — halaman register
-- `bukti-08-dashboard.png` — dashboard (setelah login) — *bisa diambil manual*
-- `bukti-09-categories.png` — halaman CRUD categories (admin) — *bisa diambil manual*
-- `bukti-10-posts.png` — halaman CRUD posts (admin) — *bisa diambil manual*
+- `bukti-08-dashboard.png` — dashboard setelah login sebagai admin
+- `bukti-09-categories.png` — halaman CRUD categories (admin)
+- `bukti-10-posts.png` — halaman CRUD posts (admin)
