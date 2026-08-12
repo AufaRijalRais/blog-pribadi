@@ -1,14 +1,14 @@
-# Dokumentasi Proyek — Laravel Blog + Admin Panel
+# Dokumentasi Praktikum — Laravel Blog + Admin Panel
 
-Proyek hasil mengikuti kursus **"Laravel 12 For Beginners: Your First Project"** dari [Laravel Daily](https://laraveldaily.com/course/laravel-from-scratch) (15 lesson), dikerjakan mulai dari nol (install) sampai selesai (validation).
+Project ini dibuat sambil ngikutin kursus **"Laravel 12 For Beginners: Your First Project"** dari Laravel Daily, dikerjain dari awal install sampe selesai bagian validation.
 
-Berbeda dengan kursus yang membuat dua project terpisah (blog + project Breeze), sesuai arahan guru proyek ini **digabung dalam satu project**: halaman blog publik dan panel admin (auth + CRUD) berada di project yang sama.
+Di kursusnya, blog dan project admin (Breeze) sebenarnya dibuat jadi **dua project terpisah**. Tapi karena arahan gurunya digabung, di sini dua-duanya jadi **satu project** — halaman blog buat pengunjung dan panel admin (login, CRUD category & post) ada di project yang sama.
 
 ---
 
-## 1. Teknologi / Lingkungan
+## 1. Lingkungan / Tools yang Dipakai
 
-Bukti versi perangkat yang digunakan:
+Versi tools yang terpasang pas ngerjain project ini:
 
 ```text
 > php -v
@@ -29,31 +29,31 @@ v24.12.0
 Laravel Framework 12.65.0
 ```
 
-Dependency utama (dari `composer.json`):
+Dependency utama (ada di `composer.json`):
 
 | Package | Keterangan |
 |---|---|
 | `laravel/framework ^12.0` | Framework Laravel 12 |
 | `laravel/breeze ^2.4` (dev) | Starter kit autentikasi (Blade + Alpine) |
-| `barryvdh/laravel-debugbar ^4.4` (dev) | Debugbar untuk memeriksa query (Step 13) |
+| `barryvdh/laravel-debugbar ^4.4` (dev) | Debugbar buat ngelihat query (Step 13) |
 
-Database yang dipakai: **SQLite** (`database/database.sqlite`). Frontend: **Tailwind CSS v4** (via Vite) untuk halaman admin, dan CDN Tailwind untuk halaman blog.
+Database-nya pake **SQLite** (`database/database.sqlite`). Untuk tampilan, halaman admin pake Tailwind CSS v4 lewat Vite, sedangkan halaman blog pake Tailwind dari CDN.
 
 ---
 
 ## 2. Fitur Aplikasi
 
-### Blog (Publik, tanpa login)
-- Halaman utama: daftar **Latest Posts** + sidebar **Categories** (filter `/?category_id={id}`)
-- Halaman `about`, `contact`, `article`, dan halaman post per ID (`/posts/{post}`)
-- Data dari database via **Eloquent**
+### Blog (publik, gak perlu login)
+- Halaman utama: daftar **Latest Posts** + sidebar **Categories**, bisa difilter pake `/?category_id={id}`
+- Halaman `about`, `contact`, `article`, dan halaman detail post per ID (`/posts/{post}`)
+- Datanya diambil dari database pake **Eloquent**
 
-### Autentikasi & Admin (Login dulu)
+### Autentikasi & Admin (harus login dulu)
 - Register / Login / Logout / Forgot password / Profile (dari **Laravel Breeze**)
 - Dashboard
 - **CRUD Categories** (khusus admin)
 - **CRUD Posts** (khusus admin) + relasi kategori + eager loading
-- **Form validation** pada form create post
+- **Validasi form** di halaman create post
 
 ---
 
@@ -73,22 +73,22 @@ php artisan migrate
 
 # 4. Install & build aset frontend
 npm install
-npm run build                 # atau npm run dev (buka terminal lain)
+npm run build                 # atau npm run dev (di terminal terpisah)
 
 # 5. Jalankan server
 php artisan serve
-# Buka http://127.0.0.1:8000
+# buka http://127.0.0.1:8000
 ```
 
-### Akun & Data contoh
+### Akun & Data Contoh
 
-Akun admin (sudah dibuat saat praktik):
+Akun admin yang udah dibuat pas praktik:
 
 | Email | Password | is_admin |
 |---|---|---|
 | `admin@example.com` | `password` | `true` |
 
-Buat user lain lewat form `/register`. Untuk menjadikan user sebagai admin:
+Buat user lain lewat form `/register`. Kalo mau dijadikan admin:
 
 ```bash
 php artisan tinker
@@ -96,74 +96,68 @@ php artisan tinker
 # \App\Models\User::where('email','user@example.com')->update(['is_admin'=>true]);
 ```
 
-Data kategori & post contoh (Category 1–4 dan Post 1–4) dibuat langsung lewat database saat praktik. Karena `database/database.sqlite` masuk `.gitignore`, data tersebut tidak ikut di-push. Cara menanam ulang (contoh via tinker):
+Data contoh (Category 1–4 dan Post 1–4) dibuat manual langsung di database pas praktik. Karena `database/database.sqlite` masuk `.gitignore`, data itu gak ikut ke-push. Kalo mau ditanam ulang, contohnya gini:
 
 ```php
 \App\Models\Category::create(['name' => 'Category 1']);
-// ... dst, lalu:
+// ... dan seterusnya sampai Category 4, lalu:
 \App\Models\Post::create(['title' => 'Post 1', 'text' => 'Something something very long text. Something something very long text. Something something very long text. Something something very long text.', 'category_id' => 1]);
-// ... dst
+// ... dan seterusnya
 ```
 
-> Setelah `migrate`, hapus baris `-- create table` di bawah ini hanya diingat: gunakan perintah di atas. Data contoh bersifat opsional.
+Data contoh ini sifatnya opsional, yang penting projectnya jalan dulu.
 
 ---
 
 ## 4. Dokumentasi Step 1–15
 
-> Semua command di bawah adalah yang benar-benar dijalankan, dan hasilnya diverifikasi langsung lewat browser / `Invoke-WebRequest` (HTTP status code). Bukti screenshot ada di folder [`docs/bukti/`](docs/bukti/).
+Semua command di bawah beneran dijalanin di terminal, dan hasilnya dicek langsung lewat browser atau `Invoke-WebRequest` (status HTTP code). Bukti screenshotnya ada di folder [`docs/bukti/`](docs/bukti/).
 
 ### Step 1 — Required Tools and Laravel Installation
 
-**Tujuan:** Menyiapkan tools (PHP, Composer, Node) dan membuat project Laravel baru.
+Nyiapin tools (PHP, Composer, Node) dan bikin project Laravel baru.
 
-**Perintah:**
 ```bash
 laravel new project
 # pilih None starter kit (default Laravel 12)
 ```
 
-**Hasil:** Folder project berisi struktur Laravel 12 (app, bootstrap, config, database, public, resources, routes, storage, tests, vendor).
+Hasilnya keluar folder project lengkap dengan struktur Laravel 12 (app, bootstrap, config, database, public, resources, routes, storage, tests, vendor).
 
 ---
 
 ### Step 2 — Routing and Creating New Page
 
-**Tujuan:** Belajar menulis route dan membuat halaman sederhana.
+Belajar nulis route dan bikin halaman sederhana.
 
-**Perintah / kode:**
 ```php
 // routes/web.php
 Route::view('/', 'home');
 ```
 
-**File:** `routes/web.php`, `resources/views/home.blade.php`
+File yang dibuat: `routes/web.php`, `resources/views/home.blade.php`
 
-**Hasil:** `/` menampilkan halaman `home`. Status: `GET / → 200`.
+Hasil: `/` nampilin halaman `home`. Status `GET / → 200`.
 
 ---
 
 ### Step 3 — Tailwind in Laravel: New Homepage Design
 
-**Tujuan:** Mendesain homepage dengan Tailwind CSS.
+Desain homepage pake Tailwind CSS.
 
-**Perintah:**
 ```bash
 npm install
 npm run build
 ```
 
-**Kode:** `home.blade.php` memuat Tailwind via CDN lalu diganti dengan `@vite([...])` (CSS di-compile).
-
-**Hasil:** Homepage tampil dengan styling Tailwind. Status: `GET / → 200`.
+`home.blade.php` awalnya pake Tailwind CDN, terus diganti pake `@vite([...])` biar CSS-nya di-compile. Hasilnya homepage udah rapi, `GET / → 200`.
 
 ---
 
 ### Step 4 — Navigation and Reusable Main Layout
 
-**Tujuan:** Membuat layout utama (`@yield`) agar header/footer tidak diulang di tiap halaman.
+Bikin layout utama biar header/footer gak ditulis ulang di tiap halaman.
 
-**Perintah / kode:**
 ```php
 // routes/web.php
 Route::view('/', 'home')->name('home');
@@ -171,42 +165,41 @@ Route::view('contact', 'contact')->name('contact');
 Route::view('about', 'about')->name('about');
 ```
 
-**File:** `resources/views/layouts/app.blade.php`, `home.blade.php`, `about.blade.php`, `contact.blade.php`
+File: `resources/views/layouts/app.blade.php`, `home.blade.php`, `about.blade.php`, `contact.blade.php`
 
-**Hasil:** Navigasi antar halaman via route name. Status: `/about → 200`, `/contact → 200`.
+Hasil: navigasi antar halaman pake route name. `/about → 200`, `/contact → 200`.
 
 ---
 
 ### Step 5 — New Design Layout for Blog Project
 
-**Tujuan:** Layout blog dengan sidebar, memakai `asset()` untuk gambar.
+Layout blog dengan sidebar, pake `asset()` buat gambar.
 
-**Perintah / kode:**
 ```php
 // routes/web.php
 Route::view('article', 'article')->name('article');
 ```
 
-**File:** `resources/views/layouts/blog.blade.php`, `home.blade.php`, `article.blade.php`, `about.blade.php`, `contact.blade.php`; gambar di `public/images/placeholder-150x150.png` dan `placeholder-800x400.png`.
+File: `resources/views/layouts/blog.blade.php`, `home.blade.php`, `article.blade.php`, `about.blade.php`, `contact.blade.php`; gambarnya di `public/images/placeholder-150x150.png` dan `placeholder-800x400.png`.
 
-**Hasil:** Desain blog (My Blog + menu About Us/Contact) tampil. Status: `/article → 200`.
+Hasil: desain blog (My Blog + menu About Us/Contact) tampil. `/article → 200`.
 
 ---
 
 ### Step 6 — Database Structure and Migrations
 
-**Tujuan:** Membuat tabel `categories` dan `posts` via migration.
+Bikin tabel `categories` dan `posts` pake migration.
 
-**Perintah:**
 ```bash
 php artisan make:migration create_categories_table
 php artisan make:migration create_posts_table
 php artisan migrate
 ```
 
-**File:** `database/migrations/2026_08_11_065107_create_categories_table.php`, `2026_08_11_065825_create_posts_table.php`
+File: `database/migrations/2026_08_11_065107_create_categories_table.php`, `2026_08_11_065825_create_posts_table.php`
 
-**Hasil:**
+Hasil di terminal:
+
 ```text
 INFO  Running migrations.
   create_categories_table ................. DONE
@@ -217,16 +210,16 @@ INFO  Running migrations.
 
 ### Step 7 — MVC, DB Queries, and Eloquent Models
 
-**Tujuan:** Membuat Model + Controller, mengambil data dari DB dengan Eloquent.
+Bikin Model + Controller, dan ngambil data dari DB pake Eloquent.
 
-**Perintah:**
 ```bash
 php artisan make:model Category
 php artisan make:model Post
 php artisan make:controller HomeController
 ```
 
-**Kode inti:**
+Kode intinya:
+
 ```php
 // app/Http/Controllers/HomeController.php
 public function index()
@@ -240,17 +233,16 @@ public function index()
 }
 ```
 
-**File:** `app/Models/Category.php`, `app/Models/Post.php`, `app/Http/Controllers/HomeController.php`, `routes/web.php`, `resources/views/home.blade.php`
+File: `app/Models/Category.php`, `app/Models/Post.php`, `app/Http/Controllers/HomeController.php`, `routes/web.php`, `resources/views/home.blade.php`
 
-**Hasil:** `GET / → 200` menampilkan posts & categories dari database.
+Hasil: `GET / → 200`, halaman utama nampilin posts & categories dari database.
 
 ---
 
 ### Step 8 — Eloquent Relations and GET Parameters
 
-**Tujuan:** Relasi `belongsTo` (Post → Category) dan filtering lewat GET parameter.
+Relasi `belongsTo` (Post → Category) dan filtering lewat GET parameter.
 
-**Kode:**
 ```php
 // app/Models/Post.php
 public function category()
@@ -259,24 +251,25 @@ public function category()
 }
 ```
 
-**Hasil:** Filter `GET /?category_id=2` hanya menampilkan post kategori 2. Terverifikasi: halaman berisi `Post 2`, tidak berisi `Post 1`.
+Hasil: `GET /?category_id=2` cuma nampilin post dari kategori 2. Dicek di browser, halamannya berisi `Post 2` dan gak ada `Post 1`.
 
 ---
 
 ### Step 9 — Route Model Binding with Parameters
 
-**Tujuan:** Halaman detail post per ID dengan route model binding.
+Halaman detail post per ID pake route model binding.
 
-**Perintah / kode:**
 ```bash
 php artisan make:controller PostController
 ```
+
 ```php
 // routes/web.php
 Route::get('posts/{post}', [PostController::class, 'show'])
     ->whereNumber('post')
     ->name('post.show');
 ```
+
 ```php
 // app/Http/Controllers/PostController.php
 public function show(Post $post)
@@ -285,17 +278,16 @@ public function show(Post $post)
 }
 ```
 
-**Hasil:** `GET /posts/1 → 200`, `/posts/999 → 404`.
+Hasil: `GET /posts/1 → 200`, dan `/posts/999 → 404`.
 
-> Catatan gabungan project: `whereNumber('post')` ditambahkan agar `/posts/create` (halaman admin step 13) tidak tertangkap route blog `posts/{post}`.
+> Catatan (karena project digabung): `whereNumber('post')` ditambah biar `/posts/create` (halaman admin di step 13) gak ketangkap sama route blog `posts/{post}`.
 
 ---
 
 ### Step 10 — Starter Kits and Using Laravel Breeze
 
-**Tujuan:** Memasang autentikasi (login/register/dashboard) dengan Laravel Breeze.
+Pasang autentikasi (login/register/dashboard) pake Laravel Breeze.
 
-**Perintah:**
 ```bash
 composer require laravel/breeze --dev
 php artisan breeze:install blade --no-interaction
@@ -303,24 +295,24 @@ php artisan migrate
 npm install && npm run build
 ```
 
-**File baru:** `routes/auth.php`, `app/Http/Controllers/Auth/*`, `app/Http/Controllers/ProfileController.php`, `resources/views/auth/*`, `resources/views/dashboard.blade.php`, `resources/views/profile/*`, `resources/views/layouts/app.blade.php`, `resources/views/layouts/navigation.blade.php`, `resources/views/components/*`.
+File baru: `routes/auth.php`, `app/Http/Controllers/Auth/*`, `app/Http/Controllers/ProfileController.php`, `resources/views/auth/*`, `resources/views/dashboard.blade.php`, `resources/views/profile/*`, `resources/views/layouts/app.blade.php`, `resources/views/layouts/navigation.blade.php`, `resources/views/components/*`.
 
-**Hasil:** `/login → 200`, `/register → 200`, `/dashboard → redirect ke /login` (harus login dulu).
+Hasil: `/login → 200`, `/register → 200`, sedangkan `/dashboard` ngelunjak ke `/login` kalo belum login.
 
 ---
 
 ### Step 11 — Categories CRUD: Index, Create, Update, Delete
 
-**Tujuan:** CRUD kategori di panel admin.
+CRUD kategori di panel admin.
 
-**Perintah:**
 ```bash
 php artisan make:controller CategoryController --resource --model=Category
 ```
 
-**File:** `app/Http/Controllers/CategoryController.php`, `resources/views/categories/{index,create,edit}.blade.php`, link "Categories" di `layouts/navigation.blade.php`.
+File: `app/Http/Controllers/CategoryController.php`, `resources/views/categories/{index,create,edit}.blade.php`, link "Categories" di `layouts/navigation.blade.php`.
 
-**Kode inti:**
+Kode intinya:
+
 ```php
 public function store(Request $request)
 {
@@ -329,22 +321,22 @@ public function store(Request $request)
 }
 ```
 
-**Hasil (login sebagai admin):** `/categories → 200` (tabel kategori), create → 302 redirect ke index, edit & delete jalan. Tanpa login → redirect ke `/login`.
+Hasil (login sebagai admin): `/categories → 200` nampilin tabel kategori, tambah data → 302 balik ke index, edit & delete jalan. Kalo belum login → disuruh login dulu.
 
 ---
 
 ### Step 12 — Admin User, Route Groups, Middleware
 
-**Tujuan:** Kolom `is_admin`, custom middleware, dan melindungi route kategori hanya untuk admin.
+Nambahin kolom `is_admin`, bikin custom middleware, dan melindungi route kategori biar cuma admin yang bisa akses.
 
-**Perintah:**
 ```bash
 php artisan make:migration add_is_admin_to_users_table
 php artisan make:middleware IsAdminMiddleware
 php artisan migrate
 ```
 
-**Kode:**
+Kodenya:
+
 ```php
 // app/Http/Middleware/IsAdminMiddleware.php
 public function handle(Request $request, Closure $next): Response
@@ -355,6 +347,7 @@ public function handle(Request $request, Closure $next): Response
     return $next($request);
 }
 ```
+
 ```php
 // routes/web.php
 Route::middleware('auth')->group(function () {
@@ -366,28 +359,28 @@ Route::middleware('auth')->group(function () {
 });
 ```
 
-**File:** migrasi `add_is_admin_to_users_table`, `IsAdminMiddleware.php`, `routes/web.php`, navigasi dengan `@if(auth()->user()->is_admin)`.
+File: migrasi `add_is_admin_to_users_table`, `IsAdminMiddleware.php`, `routes/web.php`, dan navigasi yang pake `@if(auth()->user()->is_admin)`.
 
-**Hasil terverifikasi:**
-- Admin (`admin@example.com`) akses `/categories` → `200`
-- User biasa akses `/categories` → `403 Forbidden`
-- Menu Categories/Posts hanya tampil untuk admin
+Hasil yang dicek:
+- Admin (`admin@example.com`) buka `/categories` → `200`
+- User biasa buka `/categories` → `403 Forbidden`
+- Menu Categories/Posts cuma muncul di user admin
 
-> Catatan gabungan project: `->except(['show'])` dipakai karena route `posts/{post}` sudah dipakai halaman post publik blog (step 9).
+> Catatan (karena project digabung): `->except(['show'])` dipake soalnya route `posts/{post}` udah kepake sama halaman post publik blog (step 9).
 
 ---
 
 ### Step 13 — Posts CRUD: Performance and Debugbar
 
-**Tujuan:** CRUD posts + eager loading + memasang Debugbar untuk melihat query.
+CRUD posts + eager loading + pasang Debugbar buat ngelihat query.
 
-**Perintah:**
 ```bash
 php artisan make:controller PostController --resource --model=Post
 composer require barryvdh/laravel-debugbar --dev
 ```
 
-**Kode inti (eager loading):**
+Kode inti (eager loading):
+
 ```php
 // app/Http/Controllers/PostController.php
 public function index()
@@ -397,26 +390,26 @@ public function index()
 }
 ```
 
-**File:** `PostController.php`, `resources/views/posts/{index,create,edit}.blade.php`, relasi `category()` di `Post.php`, navigasi link "Posts".
+File: `PostController.php`, `resources/views/posts/{index,create,edit}.blade.php`, relasi `category()` di `Post.php`, link "Posts" di navigasi.
 
-**Hasil terverifikasi:**
+Hasil yang dicek:
 - `/posts → 200` (tabel posts + nama kategori), `/posts/create → 200`, edit → 200
-- CRUD create/update/delete post jalan (HTTP 302 → redirect ke index)
-- Debugbar muncul (terlihat bar di bawah halaman + `phpdebugbar` di HTML)
-- User biasa akses `/posts` → `403`
+- CRUD create/update/delete post jalan (302 → balik ke index)
+- Debugbar muncul (ada bar di bawah halaman + `phpdebugbar` di HTML)
+- User biasa buka `/posts` → `403`
 
 ---
 
 ### Step 14 — Form Validation and Error Messages
 
-**Tujuan:** Validasi backend dan menampilkan pesan error.
+Validasi di sisi backend dan nampilin pesan error.
 
-**Perintah:**
 ```bash
 php artisan make:request StorePostRequest
 ```
 
-**Kode:**
+Kodenya:
+
 ```php
 // app/Http/Requests/StorePostRequest.php
 public function authorize(): bool
@@ -433,6 +426,7 @@ public function rules(): array
     ];
 }
 ```
+
 ```php
 // app/Http/Controllers/PostController.php
 public function store(StorePostRequest $request)
@@ -441,6 +435,7 @@ public function store(StorePostRequest $request)
     return redirect()->route('posts.index');
 }
 ```
+
 ```blade
 {{-- resources/views/posts/create.blade.php --}}
 @if ($errors->any())
@@ -454,15 +449,15 @@ public function store(StorePostRequest $request)
 @endif
 ```
 
-**Hasil terverifikasi:**
-- Submit form kosong → `302` redirect balik ke `/posts/create` dan muncul pesan *"The title field is required."*, *"The text field is required."*
-- Submit form valid → post berhasil dibuat (`302` → `/posts`)
+Hasil yang dicek:
+- Submit form kosong → `302` balik ke `/posts/create` dan muncul pesan *"The title field is required."*, *"The text field is required."*
+- Submit form yang diisi bener → post kebuat (302 → `/posts`)
 
 ---
 
 ### Step 15 — What to Learn Next?
 
-**Tujuan:** Penutup. Proyek selesai 15/15.
+Penutup dari kursus, project udah selesai 15/15.
 
 ---
 
@@ -496,17 +491,17 @@ Total: **45 route**.
 
 ## 6. Catatan Penting (Perbedaan dari Tutorial)
 
-Karena blog & admin digabung dalam satu project (sesuai arahan guru), ada penyesuaian kecil yang **tidak ada di tutorial** (di tutorial dua project terpisah):
+Karena blog & admin digabung dalam satu project (sesuai arahan guru), ada penyesuaian kecil yang di tutorial gak ada (di tutorial dua projectnya dipisah):
 
-1. **`posts/{post}` (blog) vs resource `posts` (admin)** — keduanya memakai URI yang sama. Solusi: resource posts memakai `->except(['show'])` agar halaman post publik tetap jalan.
-2. **`/posts/create` ketangkap route blog** — route blog diberi `->whereNumber('post')` agar hanya mencocokkan ID angka.
-3. **Server `php artisan serve` menyimpan route lama di memori** (karena `opcache.enable_cli=On`) — setiap mengubah route, restart server (`Ctrl+C` lalu `php artisan serve`) dan jalankan `php artisan optimize:clear`.
+1. **`posts/{post}` (blog) vs resource `posts` (admin)** — dua-duanya pake URI yang sama. Solusinya resource posts dikasih `->except(['show'])` biar halaman post publik tetep jalan.
+2. **`/posts/create` ketangkap route blog** — route blog dikasih `->whereNumber('post')` biar cuma cocok sama ID angka.
+3. **Server `php artisan serve` nyimpen route lama di memori** (karena `opcache.enable_cli=On`) — tiap ganti route, server harus di-restart (`Ctrl+C` lalu `php artisan serve`) dan jalankan `php artisan optimize:clear`.
 
 ---
 
 ## 7. Bukti Screenshot
 
-Bukti diambil **langsung dari layar** (browser dibuka lalu di-screenshot, dan command dijalankan beneran di terminal lalu output-nya disimpan). File ada di folder [`docs/bukti/`](docs/bukti/):
+Buktinya diambil langsung dari layar — browser dibuka beneran terus di-screenshot, dan command-nya dijalanin beneran di terminal lalu output-nya disimpen. Filenya ada di folder [`docs/bukti/`](docs/bukti/):
 
 - `terminal-log.txt` — output asli command di terminal (`php -v`, `composer --version`, `node -v`, `npm -v`, `php artisan --version`, `php artisan route:list`, `php artisan migrate:status`)
 - `bukti-01-home.png` — halaman utama blog
