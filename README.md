@@ -1,8 +1,8 @@
 # Dokumentasi Praktikum — Laravel Blog + Admin Panel
 
-Project ini dibuat sambil ngikutin kursus **"Laravel 12 For Beginners: Your First Project"** dari Laravel Daily, dikerjain dari awal install sampe selesai bagian validation.
+Project ini kubuat sambil ngikutin kursus **"Laravel 12 For Beginners: Your First Project"** dari Laravel Daily, dari nol sampe selesai bagian validation.
 
-Di kursusnya, blog dan project admin (Breeze) sebenarnya dibuat jadi **dua project terpisah**. Tapi karena arahan gurunya digabung, di sini dua-duanya jadi **satu project** — halaman blog buat pengunjung dan panel admin (login, CRUD category & post) ada di project yang sama.
+Di kursusnya itu sebenarnya blog sama project admin (Breeze) dibuat jadi **dua project terpisah**. Nah, karena kata guru disuruh digabung, jadi di sini dua-duanya kugabung jadi **satu project** — halaman blog buat pengunjung sama panel admin (login, CRUD category & post) ada di project yang sama.
 
 ---
 
@@ -37,7 +37,7 @@ Dependency utama (ada di `composer.json`):
 | `laravel/breeze ^2.4` (dev) | Starter kit autentikasi (Blade + Alpine) |
 | `barryvdh/laravel-debugbar ^4.4` (dev) | Debugbar buat ngelihat query (Step 13) |
 
-Database-nya pake **SQLite** (`database/database.sqlite`). Untuk tampilan, halaman admin pake Tailwind CSS v4 lewat Vite, sedangkan halaman blog pake Tailwind dari CDN.
+Databasenya pake **SQLite** (`database/database.sqlite`). Soal tampilan, halaman admin pake Tailwind CSS v4 lewat Vite, kalo halaman blog pake Tailwind dari CDN.
 
 ---
 
@@ -48,7 +48,7 @@ Database-nya pake **SQLite** (`database/database.sqlite`). Untuk tampilan, halam
 - Halaman `about`, `contact`, `article`, dan halaman detail post per ID (`/posts/{post}`)
 - Datanya diambil dari database pake **Eloquent**
 
-### Autentikasi & Admin (harus login dulu)
+### Autentikasi & Admin (login dulu)
 - Register / Login / Logout / Forgot password / Profile (dari **Laravel Breeze**)
 - Dashboard
 - **CRUD Categories** (khusus admin)
@@ -82,7 +82,7 @@ php artisan serve
 
 ### Akun & Data Contoh
 
-Akun admin yang udah dibuat pas praktik:
+Akun admin yang udah kubuat pas praktik:
 
 | Email | Password | is_admin |
 |---|---|---|
@@ -96,33 +96,33 @@ php artisan tinker
 # \App\Models\User::where('email','user@example.com')->update(['is_admin'=>true]);
 ```
 
-Data contoh (Category 1–4 dan Post 1–4) dibuat manual langsung di database pas praktik. Karena `database/database.sqlite` masuk `.gitignore`, data itu gak ikut ke-push. Kalo mau ditanam ulang, contohnya gini:
+Data contoh (Category 1–4 dan Post 1–4) kubuat manual langsung di database pas praktik. Soalnya `database/database.sqlite` masuk `.gitignore`, datanya gak ikut ke-push. Kalo mau ditanam ulang, contohnya gini:
 
 ```php
 \App\Models\Category::create(['name' => 'Category 1']);
-// ... dan seterusnya sampai Category 4, lalu:
+// ... sampe Category 4, lalu:
 \App\Models\Post::create(['title' => 'Post 1', 'text' => 'Something something very long text. Something something very long text. Something something very long text. Something something very long text.', 'category_id' => 1]);
 // ... dan seterusnya
 ```
 
-Data contoh ini sifatnya opsional, yang penting projectnya jalan dulu.
+Data contoh ini opsional, yang penting projectnya jalan dulu.
 
 ---
 
 ## 4. Dokumentasi Step 1–15
 
-Semua command di bawah beneran dijalanin di terminal, dan hasilnya dicek langsung lewat browser atau `Invoke-WebRequest` (status HTTP code). Bukti screenshotnya ada di folder [`docs/bukti/`](docs/bukti/).
+Semua command di bawah beneran kujalankan di terminal, terus hasilnya kucek langsung lewat browser atau `Invoke-WebRequest` (status HTTP code). Bukti screenshot-nya ada di folder [`docs/bukti/`](docs/bukti/).
 
 ### Step 1 — Required Tools and Laravel Installation
 
-Nyiapin tools (PHP, Composer, Node) dan bikin project Laravel baru.
+Nyiapin tools (PHP, Composer, Node) terus bikin project Laravel baru.
 
 ```bash
 laravel new project
 # pilih None starter kit (default Laravel 12)
 ```
 
-Hasilnya keluar folder project lengkap dengan struktur Laravel 12 (app, bootstrap, config, database, public, resources, routes, storage, tests, vendor).
+Hasilnya keluar folder project lengkap pake struktur Laravel 12 (app, bootstrap, config, database, public, resources, routes, storage, tests, vendor).
 
 ---
 
@@ -156,7 +156,7 @@ npm run build
 
 ### Step 4 — Navigation and Reusable Main Layout
 
-Bikin layout utama biar header/footer gak ditulis ulang di tiap halaman.
+Bikin layout utama biar header/footer gak nulis ulang di tiap halaman.
 
 ```php
 // routes/web.php
@@ -173,7 +173,7 @@ Hasil: navigasi antar halaman pake route name. `/about → 200`, `/contact → 2
 
 ### Step 5 — New Design Layout for Blog Project
 
-Layout blog dengan sidebar, pake `asset()` buat gambar.
+Layout blog pake sidebar, pake `asset()` buat gambar.
 
 ```php
 // routes/web.php
@@ -182,7 +182,7 @@ Route::view('article', 'article')->name('article');
 
 File: `resources/views/layouts/blog.blade.php`, `home.blade.php`, `article.blade.php`, `about.blade.php`, `contact.blade.php`; gambarnya di `public/images/placeholder-150x150.png` dan `placeholder-800x400.png`.
 
-Hasil: desain blog (My Blog + menu About Us/Contact) tampil. `/article → 200`.
+Hasil: desain blog (My Blog + menu About Us/Contact) udah keliatan. `/article → 200`.
 
 ---
 
@@ -210,7 +210,7 @@ INFO  Running migrations.
 
 ### Step 7 — MVC, DB Queries, and Eloquent Models
 
-Bikin Model + Controller, dan ngambil data dari DB pake Eloquent.
+Bikin Model + Controller, terus ngambil data dari DB pake Eloquent.
 
 ```bash
 php artisan make:model Category
@@ -251,7 +251,7 @@ public function category()
 }
 ```
 
-Hasil: `GET /?category_id=2` cuma nampilin post dari kategori 2. Dicek di browser, halamannya berisi `Post 2` dan gak ada `Post 1`.
+Hasil: `GET /?category_id=2` cuma nampilin post dari kategori 2. Waktu dicek di browser, isinya `Post 2` dan gak ada `Post 1`.
 
 ---
 
@@ -280,7 +280,7 @@ public function show(Post $post)
 
 Hasil: `GET /posts/1 → 200`, dan `/posts/999 → 404`.
 
-> Catatan (karena project digabung): `whereNumber('post')` ditambah biar `/posts/create` (halaman admin di step 13) gak ketangkap sama route blog `posts/{post}`.
+> Catatan (soalnya project digabung): `whereNumber('post')` kutambah biar `/posts/create` (halaman admin di step 13) gak ketangkap sama route blog `posts/{post}`.
 
 ---
 
@@ -297,7 +297,7 @@ npm install && npm run build
 
 File baru: `routes/auth.php`, `app/Http/Controllers/Auth/*`, `app/Http/Controllers/ProfileController.php`, `resources/views/auth/*`, `resources/views/dashboard.blade.php`, `resources/views/profile/*`, `resources/views/layouts/app.blade.php`, `resources/views/layouts/navigation.blade.php`, `resources/views/components/*`.
 
-Hasil: `/login → 200`, `/register → 200`, sedangkan `/dashboard` ngelunjak ke `/login` kalo belum login.
+Hasil: `/login → 200`, `/register → 200`, kalo `/dashboard` belum login langsung dilempar ke `/login`.
 
 ---
 
@@ -321,13 +321,13 @@ public function store(Request $request)
 }
 ```
 
-Hasil (login sebagai admin): `/categories → 200` nampilin tabel kategori, tambah data → 302 balik ke index, edit & delete jalan. Kalo belum login → disuruh login dulu.
+Hasil (login sebagai admin): `/categories → 200` nampilin tabel kategori, tambah data → 302 balik ke index, edit & delete jalan. Kalo belum login, disuruh login dulu.
 
 ---
 
 ### Step 12 — Admin User, Route Groups, Middleware
 
-Nambahin kolom `is_admin`, bikin custom middleware, dan melindungi route kategori biar cuma admin yang bisa akses.
+Nambahin kolom `is_admin`, bikin custom middleware, terus ngejagain route kategori biar cuma admin yang bisa akses.
 
 ```bash
 php artisan make:migration add_is_admin_to_users_table
@@ -366,7 +366,7 @@ Hasil yang dicek:
 - User biasa buka `/categories` → `403 Forbidden`
 - Menu Categories/Posts cuma muncul di user admin
 
-> Catatan (karena project digabung): `->except(['show'])` dipake soalnya route `posts/{post}` udah kepake sama halaman post publik blog (step 9).
+> Catatan (soalnya project digabung): `->except(['show'])` kupake soalnya route `posts/{post}` udah kepake sama halaman post publik blog (step 9).
 
 ---
 
@@ -491,7 +491,7 @@ Total: **45 route**.
 
 ## 6. Catatan Penting (Perbedaan dari Tutorial)
 
-Karena blog & admin digabung dalam satu project (sesuai arahan guru), ada penyesuaian kecil yang di tutorial gak ada (di tutorial dua projectnya dipisah):
+Karena blog & admin digabung jadi satu project (sesuai arahan guru), ada penyesuaian kecil yang di tutorial gak ada (soalnya di tutorial dua project-nya dipisah):
 
 1. **`posts/{post}` (blog) vs resource `posts` (admin)** — dua-duanya pake URI yang sama. Solusinya resource posts dikasih `->except(['show'])` biar halaman post publik tetep jalan.
 2. **`/posts/create` ketangkap route blog** — route blog dikasih `->whereNumber('post')` biar cuma cocok sama ID angka.
@@ -501,7 +501,7 @@ Karena blog & admin digabung dalam satu project (sesuai arahan guru), ada penyes
 
 ## 7. Bukti Screenshot
 
-Buktinya diambil langsung dari layar — browser dibuka beneran terus di-screenshot, dan command-nya dijalanin beneran di terminal lalu output-nya disimpen. Filenya ada di folder [`docs/bukti/`](docs/bukti/):
+Buktinya kuambil langsung dari layar — browser dibuka beneran terus di-screenshot, dan command-nya kujalankan beneran di terminal terus output-nya kusimpen. Filenya ada di folder [`docs/bukti/`](docs/bukti/):
 
 - `terminal-log.txt` — output asli command di terminal (`php -v`, `composer --version`, `node -v`, `npm -v`, `php artisan --version`, `php artisan route:list`, `php artisan migrate:status`)
 - `bukti-01-home.png` — halaman utama blog
