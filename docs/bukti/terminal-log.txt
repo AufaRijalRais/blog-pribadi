@@ -1,0 +1,87 @@
+﻿=== PHP Version ===
+PHP 8.4.0 (cli) (built: Nov 21 2024 08:18:43) (NTS Visual C++ 2019 x64)
+Copyright (c) The PHP Group
+Zend Engine v4.4.0, Copyright (c) Zend Technologies
+    with Zend OPcache v8.4.0, Copyright (c), by Zend Technologies
+
+=== Composer Version ===
+Composer version 2.9.3 2025-12-30 13:40:17
+composer : PHP version 8.4.0 (C:\Users\ASUS\.config\herd-lite\bin\php.exe)
+At line:1 char:330
++ ...  Version ==="); [void]$sb.AppendLine((composer --version 2>&1 | Out-S ...
++                                           ~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (PHP version 8.4...te\bin\php.exe):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Run the "diagnose" command to get more detailed diagnostics output.
+
+=== Node & NPM ===
+v24.12.0
+
+11.6.2
+
+=== Laravel Version ===
+Laravel Framework 12.65.0
+
+=== Routes List ===
+
+  GET|HEAD        / ...................................................................... home › HomeController@index
+  GET|HEAD        _debugbar/assets ........... debugbar.assets › Fruitcake\LaravelDebugbar › AssetController@getAssets
+  DELETE          _debugbar/cache/{key} ... debugbar.cache.delete › Fruitcake\LaravelDebugbar › CacheController@delete
+  GET|HEAD        _debugbar/clockwork/{id} debugbar.clockwork › Fruitcake\LaravelDebugbar › OpenHandlerController@clo…
+  GET|HEAD        _debugbar/open ..... debugbar.openhandler › Fruitcake\LaravelDebugbar › OpenHandlerController@handle
+  POST            _debugbar/queries/explain debugbar.queries.explain › Fruitcake\LaravelDebugbar › QueriesController@…
+  GET|HEAD        about ........................................................................................ about
+  GET|HEAD        article .................................................................................... article
+  GET|HEAD        categories ............................................. categories.index › CategoryController@index
+  POST            categories ............................................. categories.store › CategoryController@store
+  GET|HEAD        categories/create .................................... categories.create › CategoryController@create
+  GET|HEAD        categories/{category} .................................... categories.show › CategoryController@show
+  PUT|PATCH       categories/{category} ................................ categories.update › CategoryController@update
+  DELETE          categories/{category} .............................. categories.destroy › CategoryController@destroy
+  GET|HEAD        categories/{category}/edit ............................... categories.edit › CategoryController@edit
+  GET|HEAD        confirm-password ........................ password.confirm › Auth\ConfirmablePasswordController@show
+  POST            confirm-password .......................................... Auth\ConfirmablePasswordController@store
+  GET|HEAD        contact .................................................................................... contact
+  GET|HEAD        dashboard ............................................................ dashboard › routes/web.php:22
+  POST            email/verification-notification verification.send › Auth\EmailVerificationNotificationController@st…
+  GET|HEAD        forgot-password ......................... password.request › Auth\PasswordResetLinkController@create
+  POST            forgot-password ............................ password.email › Auth\PasswordResetLinkController@store
+  GET|HEAD        login ........................................... login › Auth\AuthenticatedSessionController@create
+  POST            login .................................................... Auth\AuthenticatedSessionController@store
+  POST            logout ........................................ logout › Auth\AuthenticatedSessionController@destroy
+  PUT             password .......................................... password.update › Auth\PasswordController@update
+  GET|HEAD        posts ........................................................... posts.index › PostController@index
+  POST            posts ........................................................... posts.store › PostController@store
+  GET|HEAD        posts/create .................................................. posts.create › PostController@create
+  GET|HEAD        posts/{post} ....................................................... post.show › PostController@show
+  PUT|PATCH       posts/{post} .................................................. posts.update › PostController@update
+  DELETE          posts/{post} ................................................ posts.destroy › PostController@destroy
+  GET|HEAD        posts/{post}/edit ................................................. posts.edit › PostController@edit
+  GET|HEAD        profile ...................................................... profile.edit › ProfileController@edit
+  PATCH           profile .................................................. profile.update › ProfileController@update
+  DELETE          profile ................................................ profile.destroy › ProfileController@destroy
+  GET|HEAD        register ........................................... register › Auth\RegisteredUserController@create
+  POST            register ....................................................... Auth\RegisteredUserController@store
+  POST            reset-password ................................... password.store › Auth\NewPasswordController@store
+  GET|HEAD        reset-password/{token} .......................... password.reset › Auth\NewPasswordController@create
+  GET|HEAD        storage/{path} storage.local › vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemService…
+  PUT             storage/{path} storage.local.upload › vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem…
+  GET|HEAD        up ..... vendor/laravel/framework/src/Illuminate/Foundation/Configuration/ApplicationBuilder.php:219
+  GET|HEAD        verify-email .......................... verification.notice › Auth\EmailVerificationPromptController
+  GET|HEAD        verify-email/{id}/{hash} .......................... verification.verify › Auth\VerifyEmailController
+
+                                                                                                   Showing [45] routes
+
+
+=== Migration Status ===
+
+  Migration name ...................................................................................... Batch / Status  
+  0001_01_01_000000_create_users_table ....................................................................... [1] Ran  
+  0001_01_01_000001_create_cache_table ....................................................................... [1] Ran  
+  0001_01_01_000002_create_jobs_table ........................................................................ [1] Ran  
+  2026_08_11_065107_create_categories_table .................................................................. [1] Ran  
+  2026_08_11_065825_create_posts_table ....................................................................... [1] Ran  
+  2026_08_12_004428_add_is_admin_to_users_table .............................................................. [2] Ran  
+
+
